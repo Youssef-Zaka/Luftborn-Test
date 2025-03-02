@@ -1,5 +1,7 @@
 using Bookmarted.Application;
 using Bookmarted.Infrastructure;
+using Microsoft.AspNetCore.Diagnostics;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,27 @@ if (string.IsNullOrEmpty(connectionString))
 builder.Services.AddInfrastructure(connectionString);
 
 var app = builder.Build();
+
+// Global Exception Handling
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        context.Response.ContentType = "application/json";
+
+        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+        if (exceptionHandlerPathFeature?.Error is InvalidOperationException invalidOpEx)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            await context.Response.WriteAsJsonAsync(new { Error = invalidOpEx.Message });
+        }
+        else
+        {
+            await context.Response.WriteAsJsonAsync(new { Error = "An unexpected error occurred." });
+        }
+    });
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

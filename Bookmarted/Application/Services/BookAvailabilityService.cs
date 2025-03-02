@@ -19,7 +19,7 @@ namespace Bookmarted.Application.Services
             _bookRepository = bookRepository;
         }
 
-        public async Task<IEnumerable<BookAvailabilityDto?>> GetBooksByStoreAsync(int storeId)
+        public async Task<IEnumerable<BookAvailabilityDto>> GetBooksByStoreAsync(int storeId)
         {
             var availabilities = await _bookAvailabilityRepository.GetByStoreIdAsync(storeId);
             if (!availabilities.Any())

@@ -20,21 +20,27 @@ namespace Bookmarted.Application.Services
             return books.Select(b => new BookDto(b.BookId, b.Title, b.Description, b.Genre.ToString(), b.Condition.ToString()));
         }
 
-        public async Task<BookDto?> GetBookByIdAsync(int bookId)
+        public async Task<BookDto> GetBookByIdAsync(int bookId)
         {
             var book = await _bookRepository.GetByIdAsync(bookId);
-            if (book == null) return null;
+            if (book == null) throw new InvalidOperationException($"Book with ID {bookId} not found.");
             return new BookDto(book.BookId, book.Title, book.Description, book.Genre.ToString(), book.Condition.ToString());
         }
 
         public async Task<BookDto> CreateBookAsync(CreateBookDto bookDto)
         {
+            if (!Enum.TryParse<Domain.Enums.Genre>(bookDto.Genre, true, out var genre))
+                throw new InvalidOperationException($"Invalid genre value: {bookDto.Genre}.");
+
+            if (!Enum.TryParse<Domain.Enums.BookCondition>(bookDto.Condition, true, out var condition))
+                throw new InvalidOperationException($"Invalid book condition value: {bookDto.Condition}.");
+
             var book = new Book
             {
                 Title = bookDto.Title,
                 Description = bookDto.Description,
-                Genre = Enum.Parse<Domain.Enums.Genre>(bookDto.Genre),
-                Condition = Enum.Parse<Domain.Enums.BookCondition>(bookDto.Condition)
+                Genre = genre,
+                Condition = condition
             };
 
             var createdBook = await _bookRepository.AddAsync(book);
@@ -46,10 +52,16 @@ namespace Bookmarted.Application.Services
             var book = await _bookRepository.GetByIdAsync(bookId);
             if (book == null) return false;
 
+            if (!Enum.TryParse<Domain.Enums.Genre>(bookDto.Genre, true, out var genre))
+                throw new InvalidOperationException($"Invalid genre value: {bookDto.Genre}.");
+
+            if (!Enum.TryParse<Domain.Enums.BookCondition>(bookDto.Condition, true, out var condition))
+                throw new InvalidOperationException($"Invalid book condition value: {bookDto.Condition}.");
+
             book.Title = bookDto.Title;
             book.Description = bookDto.Description;
-            book.Genre = Enum.Parse<Domain.Enums.Genre>(bookDto.Genre);
-            book.Condition = Enum.Parse<Domain.Enums.BookCondition>(bookDto.Condition);
+            book.Genre = genre;
+            book.Condition = condition;
 
             return await _bookRepository.UpdateAsync(book);
         }

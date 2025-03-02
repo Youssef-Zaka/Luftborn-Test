@@ -20,10 +20,10 @@ namespace Bookmarted.Application.Services
             return stores.Select(s => new StoreDto(s.StoreId, s.Name));
         }
 
-        public async Task<StoreDto?> GetStoreByIdAsync(int storeId)
+        public async Task<StoreDto> GetStoreByIdAsync(int storeId)
         {
             var store = await _storeRepository.GetByIdAsync(storeId);
-            if (store == null) return null;
+            if (store == null) throw new InvalidOperationException($"Store with ID {storeId} not found.");
             return new StoreDto(store.StoreId, store.Name);
         }
 
