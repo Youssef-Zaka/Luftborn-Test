@@ -1,3 +1,4 @@
+using Bookmarted.Application;
 using Bookmarted.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add Infrastructure Layer
+// Add Application and Infrastructure layers
+builder.Services.AddApplicationServices();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (string.IsNullOrEmpty(connectionString))
 {

@@ -28,7 +28,6 @@
     <Folder Include="Infrastructure\ExternalServices\" />
     <Folder Include="Infrastructure\Repositories\" />
     <Folder Include="Infrastructure\Persistence\" />
-    <Folder Include="WebAPI\Controllers\" />
     <Folder Include="WebAPI\Middleware\" />
     <Folder Include="WebAPI\Filters\" />
   </ItemGroup>
