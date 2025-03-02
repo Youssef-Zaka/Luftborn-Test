@@ -1,0 +1,30 @@
+<div class="main-container">
+    <h2>Select a Store to Browse Books</h2>
+  
+    <!-- Store Selection Dropdown -->
+    <select [(ngModel)]="selectedStoreId" (change)="onStoreChange()" class="store-dropdown">
+      <option value="" disabled selected>Select a Store</option>
+      <option *ngFor="let store of stores" [value]="store.storeId">
+        {{ store.name }}
+      </option>
+    </select>
+  
+    <!-- Book Availability List -->
+    <div *ngIf="bookAvailabilities && bookAvailabilities.length > 0" class="book-list">
+      <h3>Available Books:</h3>
+      <div *ngFor="let book of bookAvailabilities" class="book-card">
+        <h4>{{ book.title }}</h4>
+        <p><strong>Price:</strong> ${{ book.price.toFixed(2) }}</p>
+        <p><strong>Stock:</strong> {{ book.stock }} units</p>
+        <p><strong>Genre:</strong> {{ book.genre }}</p>
+        <p><strong>Condition:</strong> {{ book.condition }}</p>
+        <p>{{ book.description }}</p>
+      </div>
+    </div>
+  
+    <!-- No Books Found Message -->
+    <p *ngIf="selectedStoreId && !bookAvailabilities?.length" class="no-books">
+      No books available in the selected store.
+    </p>
+  </div>
+  

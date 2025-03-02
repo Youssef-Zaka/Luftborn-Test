@@ -1,0 +1,62 @@
+.home-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #aa69f0, #669cf7);
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .content {
+    max-width: 600px;
+    animation: fadeIn 1.5s ease-in-out;
+  }
+  
+  .store-name {
+    font-size: 4rem;
+    margin: 0;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .tagline {
+    font-size: 1.5rem;
+    margin: 20px 0;
+    font-weight: 300;
+  }
+  
+  .cta-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    color: #333;
+    background-color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #6a11cb;
+    color: white;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+  }
+  
+  /* Keyframe Animation */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

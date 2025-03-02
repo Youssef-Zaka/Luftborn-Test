@@ -1,5 +1,6 @@
 using Bookmarted.Application;
 using Bookmarted.Infrastructure;
+using Bookmarted.Infrastructure.Seeding;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 
@@ -31,6 +32,9 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Register DataSeeder as a scoped service
+builder.Services.AddScoped<DataSeeder>();
+
 var app = builder.Build();
 
 app.UseCors();// Enable CORS for all endpoints
@@ -55,6 +59,13 @@ app.UseExceptionHandler(errorApp =>
         }
     });
 });
+
+// Automatically apply migrations and seed data
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
+    await seeder.SeedAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

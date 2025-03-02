@@ -1,0 +1,37 @@
+.about-container {
+    padding: 80px 20px;
+    background-color: #f1f1f1;
+    color: #333;
+    text-align: center;
+  }
+  
+  h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #2575fc;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin: 10px 0;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .contact-info {
+    margin-top: 30px;
+    font-weight: bold;
+  
+    a {
+      color: #6a11cb;
+      text-decoration: none;
+    }
+  
+    a:hover {
+      color: #2575fc;
+      text-decoration: underline;
+    }
+  }
+  
