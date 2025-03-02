@@ -58,7 +58,7 @@ README.md
 ### 3. Run the Backend API
 ```plaintext
 cd Bookmarted
-dotnet run
+dotnet run --urls "https://localhost:7008"
 ```
 - Access the API at: https://localhost:7008/swagger
 ---
