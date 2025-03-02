@@ -20,7 +20,20 @@ if (string.IsNullOrEmpty(connectionString))
 }
 builder.Services.AddInfrastructure(connectionString);
 
+//CORS Configuration for angular Project
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors();// Enable CORS for all endpoints
 
 // Global Exception Handling
 app.UseExceptionHandler(errorApp =>
